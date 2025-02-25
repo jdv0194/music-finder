@@ -1,0 +1,51 @@
+[
+  {
+    "id": 1,
+    "title": "Abbey Road",
+    "artist": "The Beatles",
+    "genre": "Rock",
+    "release_year": 1969
+  },
+  {
+    "id": 2,
+    "title": "Thriller",
+    "artist": "Michael Jackson",
+    "genre": "Pop",
+    "release_year": 1982
+  },
+  {
+    "id": 3,
+    "title": "Dark Side of the Moon",
+    "artist": "Pink Floyd",
+    "genre": "Progressive Rock",
+    "release_year": 1973
+  },
+  {
+    "id": 4,
+    "title": "Back to Black",
+    "artist": "Amy Winehouse",
+    "genre": "Soul",
+    "release_year": 2006
+  },
+  {
+    "id": 5,
+    "title": "Rumours",
+    "artist": "Fleetwood Mac",
+    "genre": "Rock",
+    "release_year": 1977
+  },
+  {
+    "id": 6,
+    "title": "Ready to Die",
+    "artist": "The Notorious B.I.G.",
+    "genre": "Hip-Hop",
+    "release_year": 1994
+  },
+  {
+    "id": 7,
+    "title": "Confessions",
+    "artist": "Usher",
+    "genre": "R&B",
+    "release_year": 20044
+  }
+]
