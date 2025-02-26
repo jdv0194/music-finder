@@ -14,8 +14,9 @@ const server = new ApolloServer({
   },
 });
 
+// Wrap the context function so it receives the Next.js RouteContext
 const handler = startServerAndCreateNextHandler(server, {
-  context: createContext,
+  context: async (ctx) => createContext(ctx),
 });
 
 export { handler as GET, handler as POST };
