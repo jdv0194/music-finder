@@ -1,9 +1,14 @@
-import { Box } from "@mui/material";
+import { Box, Container, AppBar, Toolbar, Typography } from "@mui/material";
+import { AlbumsList } from "@/components/Albums";
 
-export default function Home() {
+export default function HomePage() {
   return (
-    <div>
-      <Box>MUSIC APP</Box>
-    </div>
+    <>
+      <Container maxWidth="xl">
+        <Box sx={{ mt: 4, mb: 8 }}>
+          <AlbumsList />
+        </Box>
+      </Container>
+    </>
   );
 }

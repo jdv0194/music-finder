@@ -1,0 +1,65 @@
+// This is your Prisma schema file
+// Learn more: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id @default(uuid()) @db.Uuid
+  email         String    @unique
+  password      String
+  name          String?
+  createdAt     DateTime  @default(now()) @map("created_at")
+  updatedAt     DateTime  @default(now()) @updatedAt @map("updated_at")
+  likedAlbums   LikedAlbum[]
+
+  @@map("users")
+}
+
+model Album {
+  id              Int      @id @default(autoincrement())
+  title           String
+  artist          String
+  genre           String
+  releaseYear     Int      @map("release_year")
+  albumCover      String?  @map("album_cover")
+  largeAlbumCover String?  @map("large_album_cover")
+  albumUrl        String?  @map("album_url")
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @default(now()) @updatedAt @map("updated_at")
+  tracks          Track[]
+  likedBy         LikedAlbum[]
+
+  @@map("albums")
+}
+
+model Track {
+  id        Int      @id @default(autoincrement())
+  name      String
+  artist    String
+  duration  Int?     // Duration in seconds
+  url       String?
+  albumId   Int      @map("album_id")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+  album     Album    @relation(fields: [albumId], references: [id])
+
+  @@map("tracks")
+}
+
+model LikedAlbum {
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String   @map("user_id") @db.Uuid
+  album     Album    @relation(fields: [albumId], references: [id], onDelete: Cascade)
+  albumId   Int      @map("album_id")
+  likedAt   DateTime @default(now()) @map("liked_at")
+
+  @@id([userId, albumId])
+  @@map("liked_albums")
+}
