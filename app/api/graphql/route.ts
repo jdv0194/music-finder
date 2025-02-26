@@ -3,6 +3,7 @@ import { startServerAndCreateNextHandler } from "@as-integrations/next";
 import { typeDefs } from "../../graphql/schema";
 import { resolvers } from "../../graphql/resolvers";
 import { createContext } from "../../graphql/context";
+import { NextRequest } from "next/server";
 
 // Create Apollo Server instance
 const server = new ApolloServer({
@@ -14,9 +15,16 @@ const server = new ApolloServer({
   },
 });
 
-// Wrap the context function so it receives the Next.js RouteContext
-const handler = startServerAndCreateNextHandler(server, {
+// Create Next.js handler
+const apolloHandler = startServerAndCreateNextHandler(server, {
   context: async (ctx) => createContext(ctx),
 });
 
-export { handler as GET, handler as POST };
+// Export GET and POST functions with proper signatures
+export async function GET(request: NextRequest, context: any) {
+  return apolloHandler(request);
+}
+
+export async function POST(request: NextRequest, context: any) {
+  return apolloHandler(request);
+}
