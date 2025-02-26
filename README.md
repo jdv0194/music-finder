@@ -1,36 +1,101 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Music Finder App
 
-## Getting Started
+A web application for discovering, exploring, and managing music albums. Users can browse albums, view details, and create personal collections of albums.
 
-First, run the development server:
+## Features
+
+- Album discovery with filtering by genre, artist, and release year
+- Detailed album views with track listings
+- User authentication (register/login)
+- Album liking functionality to create personal collections
+- Adding albums from last.fm api
+- GraphQL API with JWT authentication
+- Responsive UI built with Material UI
+
+## Tech Stack
+
+- **Frontend**: Next.js 15, Material UI, Apollo Client
+- **Backend**: Next.js API Routes, Apollo Server, GraphQL
+- **Database**: PostgreSQL with Prisma ORM
+- **Authentication**: JWT with bcrypt password hashing
+
+## Prerequisites
+
+- Node.js 18+ and npm
+- PostgreSQL database (local or AWS RDS)
+- Git
+
+## Environment Variables
+
+Create a `.env.local` file in the root directory with the following variables (I can provide if needed)
+
+## Installation
+
+1. Clone the repository
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/jdv0194/music-finder-app.git
+cd music-finder-app
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Install dependencies
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm install
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+3. Setup the database
 
-## Learn More
+```bash
+# Push Prisma schema to your database
+npx prisma db push
 
-To learn more about Next.js, take a look at the following resources:
+# Seed the database with initial albums
+npx prisma db seed
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Running the App
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+# Development mode
+npm run dev
+```
 
-## Deploy on Vercel
+## Database Schema
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+The application uses the following main data models:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Album**: Music albums with metadata and cover art
+- **Track**: Individual songs belonging to albums
+- **User**: User accounts with authentication data
+- **LikedAlbum**: Junction table for user's liked albums
+
+## API Endpoints
+
+The application primarily uses GraphQL for data operations, with the main endpoint at:
+
+- `/api/graphql` - GraphQL API for all operations
+
+### Key GraphQL Operations
+
+- Queries:
+
+  - `albums`: Get all albums with optional filtering
+  - `album`: Get a single album by ID
+  - `me`: Get current user profile
+
+- Mutations:
+  - `register`: Create a new user account
+  - `login`: Authenticate user and get JWT token
+  - `likeAlbum`: Add an album to user's liked albums
+  - `unlikeAlbum`: Remove an album from user's liked albums
+  - `addAlbum`: Adds an album from last.fm api with artist name and album as params
+
+## Authentication
+
+Authentication uses JWT tokens:
+
+1. Register or login to receive a token
+2. Token is stored in localStorage
+3. Token is included in Authorization header for protected operations
+4. Protected operations include liking/unliking albums and accessing user data
